@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Workshop Registration</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap');
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:#F5F0EB;font-family:'Inter',sans-serif;min-height:100vh;padding-bottom:60px}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+  .header{background:#2E1F0F;padding:30px 20px 26px;text-align:center}
+  .header h1{font-family:'Playfair Display',serif;color:#F5ECD8;font-size:24px;margin-bottom:6px}
+  .header p{color:#B0A090;font-size:14px}
+  .wrap{max-width:520px;margin:0 auto;padding:0 16px}
+  .card{background:#fff;border-radius:16px;padding:22px 20px;margin:18px 0;
+        box-shadow:0 2px 12px rgba(0,0,0,0.08);border:1px solid #EDE3D8;animation:fadeUp 0.4s ease}
+  .card h2{font-family:'Playfair Display',serif;font-size:17px;color:#2E1F0F;
+           margin-bottom:16px;padding-bottom:10px;border-bottom:1px solid #EDE3D8}
+  .field{margin-bottom:16px}
+  label{display:block;font-size:12px;font-weight:600;color:#5A4030;margin-bottom:5px}
+  input,textarea,select{width:100%;padding:11px 13px;border:1.5px solid #D4C4B0;border-radius:9px;
+    font-size:15px;font-family:'Inter',sans-serif;background:#FBF8F4;color:#2E1F0F;
+    transition:border-color 0.2s;outline:none;-webkit-appearance:none}
+  input:focus,textarea:focus,select:focus{border-color:#C87941;box-shadow:0 0 0 3px rgba(200,121,65,0.15)}
+  textarea{resize:vertical;min-height:80px}
+  .req{color:#B94040}
+  .hint{font-size:11px;color:#9A8878;margin-top:4px}
+
+  /* Photo */
+  .photo-zone{border:2px dashed #C8B8A2;border-radius:12px;padding:26px 16px;
+              text-align:center;background:#FAF7F3;transition:border-color 0.2s}
+  .photo-zone .ico{font-size:34px;margin-bottom:8px}
+  .photo-zone p{color:#7A6855;font-size:13px;margin-bottom:14px}
+  .photo-preview{width:100%;max-height:230px;object-fit:cover;border-radius:10px;
+                 border:2px solid #D4C4B0;display:block;margin-bottom:12px}
+  .row-btns{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
+
+  /* Buttons */
+  .btn-p{background:linear-gradient(135deg,#C87941,#A85E28);color:#fff;border:none;
+    border-radius:10px;padding:11px 18px;font-family:'Inter',sans-serif;font-weight:700;
+    font-size:14px;cursor:pointer;display:inline-flex;align-items:center;gap:8px;
+    justify-content:center;transition:opacity 0.2s}
+  .btn-p:disabled{opacity:0.6;cursor:not-allowed}
+  .btn-s{background:#F0E4D4;color:#5A4030;border:none;border-radius:8px;padding:9px 16px;
+    font-family:'Inter',sans-serif;font-weight:600;font-size:13px;cursor:pointer}
+  .submit{width:100%;padding:15px;font-size:16px;margin-top:4px}
+  .spinner{width:18px;height:18px;border:2.5px solid rgba(255,255,255,0.3);
+           border-top-color:#fff;border-radius:50%;animation:spin 0.8s linear infinite}
+
+  /* Success */
+  .success{text-align:center;padding:30px 16px}
+  .success .big{font-size:60px;margin-bottom:14px}
+  .success h2{font-family:'Playfair Display',serif;font-size:23px;color:#2E1F0F;margin-bottom:8px}
+  .success p{color:#7A6855;font-size:14px;line-height:1.6}
+  .reg-box{background:#F0E4D4;border-radius:14px;padding:18px;margin:18px 0;
+           font-family:'Playfair Display',serif;font-size:30px;font-weight:700;
+           color:#C87941;letter-spacing:3px}
+  .reg-lbl{font-size:12px;color:#9A8878;font-family:'Inter',sans-serif;font-weight:600;margin-bottom:6px}
+</style>
+</head>
+<body>
+
+<script>
+  // ── ONLY this line was customised for you ──
+  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwDoFp1w30Z490U53u2VK_pn1raQhyPgNgu14s4vP3AzTAVCCDjbKJ9LI4MRIU5hUCsuA/exec";
+  const WORKSHOP   = "Workshop Registration";
+</script>
+
+<div class="header">
+  <h1>📋 Workshop Registration</h1>
+  <p>Fill in your details to register for the workshop</p>
+</div>
+
+<div class="wrap" id="formWrap">
+
+  <div class="card">
+    <h2>👤 Personal Details</h2>
+    <div class="field">
+      <label>Full Name <span class="req">*</span></label>
+      <input id="name" type="text" placeholder="Jane Doe"/>
+    </div>
+    <div class="field">
+      <label>Email Address <span class="req">*</span></label>
+      <input id="email" type="email" placeholder="jane@example.com"/>
+    </div>
+    <div class="field">
+      <label>Mobile Number <span class="req">*</span></label>
+      <input id="mobile" type="tel" placeholder="+91 98765 43210"/>
+    </div>
+    <div class="field">
+      <label>Company / Organization</label>
+      <input id="company" type="text" placeholder="Acme Corp (optional)"/>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>📷 Your Photo <span style="font-size:13px;color:#9A8878;font-weight:400">(optional)</span></h2>
+    <div class="photo-zone" id="photoZone">
+      <div id="photoPlaceholder">
+        <div class="ico">📷</div>
+        <p>Add a photo for attendance verification</p>
+        <div class="row-btns">
+          <button class="btn-s" onclick="openCamera()">📷 Camera</button>
+          <button class="btn-s" onclick="openGallery()">🖼 Gallery</button>
+        </div>
+      </div>
+      <div id="photoPreviewWrap" style="display:none">
+        <img id="photoPreview" class="photo-preview" src="" alt="Your photo"/>
+        <div class="row-btns">
+          <button class="btn-s" onclick="openCamera()">📷 Retake</button>
+          <button class="btn-s" onclick="openGallery()">🖼 Change</button>
+          <button class="btn-s" onclick="clearPhoto()" style="color:#B94040">✕ Remove</button>
+        </div>
+      </div>
+    </div>
+    <input type="file" id="fileInput" accept="image/*" style="display:none" onchange="handleFile(this)"/>
+    <p class="hint" style="margin-top:8px">Used only to verify your attendance at the event</p>
+  </div>
+
+  <div class="card">
+    <h2>💬 Feedback</h2>
+    <div class="field">
+      <label>How did you hear about this workshop?</label>
+      <select id="source">
+        <option value="">— Select one —</option>
+        <option>WhatsApp</option>
+        <option>Email</option>
+        <option>Social Media</option>
+        <option>Friend / Colleague</option>
+        <option>Company Notice</option>
+        <option>Other</option>
+      </select>
+    </div>
+    <div class="field">
+      <label>Any comments or expectations?</label>
+      <textarea id="feedback" placeholder="Tell us what you're hoping to learn…"></textarea>
+    </div>
+  </div>
+
+  <button class="btn-p submit" id="submitBtn" onclick="submitForm()">
+    ✅ Complete Registration
+  </button>
+
+</div>
+
+<!-- Success screen -->
+<div class="wrap" id="successWrap" style="display:none">
+  <div class="card">
+    <div class="success">
+      <div class="big">🎉</div>
+      <h2>You're Registered!</h2>
+      <p>Thank you for registering.<br/>Please save your registration number below —<br/>you'll need it to verify attendance.</p>
+      <div class="reg-lbl">YOUR REGISTRATION NUMBER</div>
+      <div class="reg-box" id="regDisplay">—</div>
+      <p style="font-size:12px;color:#9A8878">📸 Screenshot this screen or write it down</p>
+      <button class="btn-p" style="margin-top:20px;width:100%" onclick="shareIt()">
+        📤 Share My Registration Number
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+  let photoB64 = null;
+
+  function openCamera() {
+    const f = document.getElementById("fileInput");
+    f.setAttribute("capture","environment");
+    f.click();
+  }
+  function openGallery() {
+    const f = document.getElementById("fileInput");
+    f.removeAttribute("capture");
+    f.click();
+  }
+  function clearPhoto() {
+    photoB64 = null;
+    document.getElementById("photoPlaceholder").style.display = "block";
+    document.getElementById("photoPreviewWrap").style.display = "none";
+    document.getElementById("fileInput").value = "";
+  }
+  function handleFile(input) {
+    const file = input.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = e => {
+      const img = new Image();
+      img.onload = () => {
+        const MAX = 640, canvas = document.createElement("canvas");
+        let w = img.width, h = img.height;
+        if (w > h && w > MAX) { h = h*MAX/w; w = MAX; }
+        else if (h > MAX) { w = w*MAX/h; h = MAX; }
+        canvas.width = w; canvas.height = h;
+        canvas.getContext("2d").drawImage(img,0,0,w,h);
+        const dataUrl = canvas.toDataURL("image/jpeg",0.75);
+        photoB64 = dataUrl.split(",")[1];
+        document.getElementById("photoPreview").src = dataUrl;
+        document.getElementById("photoPlaceholder").style.display = "none";
+        document.getElementById("photoPreviewWrap").style.display = "block";
+      };
+      img.src = e.target.result;
+    };
+    reader.readAsDataURL(file);
+    input.value = "";
+  }
+
+  function makeRegNumber() {
+    const d = new Date(), pad = n => String(n).padStart(2,"0");
+    return "WS" + String(d.getFullYear()).slice(-2) + pad(d.getMonth()+1) + pad(d.getDate())
+           + "-" + Math.floor(1000 + Math.random()*9000);
+  }
+
+  async function submitForm() {
+    const name     = document.getElementById("name").value.trim();
+    const email    = document.getElementById("email").value.trim();
+    const mobile   = document.getElementById("mobile").value.trim();
+    const company  = document.getElementById("company").value.trim();
+    const source   = document.getElementById("source").value;
+    const feedback = document.getElementById("feedback").value.trim();
+
+    if (!name)   { alert("Please enter your full name."); return; }
+    if (!email || !email.includes("@")) { alert("Please enter a valid email address."); return; }
+    if (!mobile) { alert("Please enter your mobile number."); return; }
+
+    const btn = document.getElementById("submitBtn");
+    btn.disabled = true;
+    btn.innerHTML = '<span class="spinner"></span> Submitting…';
+
+    const regNumber = makeRegNumber();
+    const payload = {
+      regNumber, name, email, mobile, company, source, feedback,
+      photo: photoB64 || "",
+      timestamp: new Date().toLocaleString("en-IN", {
+        day:"2-digit", month:"short", year:"numeric",
+        hour:"2-digit", minute:"2-digit", hour12:true
+      })
+    };
+
+    try {
+      await fetch(SCRIPT_URL, {
+        method: "POST", mode: "no-cors",
+        headers: { "Content-Type":"application/json" },
+        body: JSON.stringify(payload)
+      });
+      document.getElementById("formWrap").style.display = "none";
+      document.getElementById("successWrap").style.display = "block";
+      document.getElementById("regDisplay").textContent = regNumber;
+      window.scrollTo(0,0);
+    } catch(err) {
+      alert("Submission failed. Please check your internet and try again.");
+      btn.disabled = false;
+      btn.innerHTML = "✅ Complete Registration";
+    }
+  }
+
+  function shareIt() {
+    const reg = document.getElementById("regDisplay").textContent;
+    const text = `✅ I've registered for the ${WORKSHOP}!\n\nMy Registration Number: *${reg}*\n\nSave this number — it will be needed for attendance verification at the event.`;
+    if (navigator.share) {
+      navigator.share({ title: WORKSHOP, text });
+    } else {
+      navigator.clipboard.writeText(text)
+        .then(() => alert("Copied to clipboard! Paste it into WhatsApp or email."));
+    }
+  }
+</script>
+</body>
+</html>
