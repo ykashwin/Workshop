@@ -223,15 +223,24 @@
       hour:"2-digit", minute:"2-digit", hour12:true
     });
 
+    // Separate date and time for sheet columns
+    const dateStr = now.toLocaleDateString("en-IN", {
+      day:"2-digit", month:"short", year:"numeric"
+    });
+    const timeStr = now.toLocaleTimeString("en-IN", {
+      hour:"2-digit", minute:"2-digit", hour12:true
+    }).toUpperCase();
+
     // Format: "Tuesday, 18 Jun 2026 at 02:45 PM"
     const dayName = now.toLocaleDateString("en-IN", { weekday:"long" });
     const dayFull = now.toLocaleDateString("en-IN", { day:"2-digit", month:"long", year:"numeric" });
-    const timeStr = now.toLocaleTimeString("en-IN", { hour:"2-digit", minute:"2-digit", hour12:true }).toUpperCase();
     const regMsg  = `You have been registered for ${dayName}, ${dayFull} at ${timeStr}`;
 
     const payload = {
       regNumber, name, email, mobile, company, feedback,
       source: "",
+      date: dateStr,
+      time: timeStr,
       photo: photoB64 || "",
       timestamp
     };
