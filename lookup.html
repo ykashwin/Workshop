@@ -365,7 +365,9 @@
         <div class="drow"><span class="dico">📱</span>
           <div><span class="dlbl">Mobile</span>${r.mobile}</div></div>
         <div class="drow"><span class="dico">📅</span>
-          <div><span class="dlbl">Registered on</span>${r.timestamp}</div></div>
+          <div><span class="dlbl">Registered on</span>${r.date || "—"}</div></div>
+        <div class="drow"><span class="dico">🕐</span>
+          <div><span class="dlbl">Registered at</span>${r.time || "—"}</div></div>
         ${r.source ? `<div class="drow"><span class="dico">📣</span>
           <div><span class="dlbl">Heard via</span>${r.source}</div></div>` : ""}
         ${r.feedback ? `<div class="drow"><span class="dico">💬</span>
