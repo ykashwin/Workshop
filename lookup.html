@@ -113,7 +113,7 @@
 
 <script>
   // ── Configuration ─────────────────────────────────────────────
-  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwDoFp1w30Z490U53u2VK_pn1raQhyPgNgu14s4vP3AzTAVCCDjbKJ9LI4MRIU5hUCsuA/exec";
+  const SCRIPT_URL = "REPLACE_WITH_YOUR_APPS_SCRIPT_URL";
   const ADMIN_EMAILS = ["ykashwin@gmail.com", "kkanth09@gmail.com"];
 
   // Session password (stored only in memory for this tab session)
@@ -176,6 +176,12 @@
       <div class="field">
         <label>Name</label>
         <input id="nameIn" type="text" placeholder="e.g. Jane Doe"
+               oninput="clearRes()" onkeydown="if(event.key==='Enter')doSearch()"/>
+      </div>
+      <div class="divider">— or —</div>
+      <div class="field">
+        <label>Mobile Number</label>
+        <input id="mobileIn" type="tel" placeholder="e.g. 9876543210"
                oninput="clearRes()" onkeydown="if(event.key==='Enter')doSearch()"/>
       </div>
       <button class="btn-p" id="searchBtn" onclick="doSearch()" style="margin-top:4px">
@@ -257,9 +263,13 @@
 
   // ── Search ────────────────────────────────────────────────────
   async function doSearch() {
-    const reg  = document.getElementById("regIn").value.trim().toUpperCase();
-    const name = document.getElementById("nameIn").value.trim();
-    if (!reg && !name) { alert("Enter a registration number or name to search."); return; }
+    const reg    = document.getElementById("regIn").value.trim().toUpperCase();
+    const name   = document.getElementById("nameIn").value.trim();
+    const mobile = document.getElementById("mobileIn").value.trim().replace(/\s+/g, "");
+    if (!reg && !name && !mobile) {
+      alert("Enter a registration number, name, or mobile number to search.");
+      return;
+    }
 
     const btn = document.getElementById("searchBtn");
     btn.disabled = true;
@@ -267,8 +277,9 @@
 
     try {
       const params = { action: "search" };
-      if (reg)  params.reg  = reg;
-      if (name) params.name = name;
+      if (reg)    params.reg    = reg;
+      if (name)   params.name   = name;
+      if (mobile) params.mobile = mobile;
       const data = await api(params);
 
       if (!data.success || !data.records?.length) showNotFound();
