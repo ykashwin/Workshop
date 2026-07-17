@@ -20,15 +20,13 @@
            margin-bottom:16px;padding-bottom:10px;border-bottom:1px solid #EDE3D8}
   .field{margin-bottom:16px}
   label{display:block;font-size:12px;font-weight:600;color:#5A4030;margin-bottom:5px}
-  input,textarea,select{width:100%;padding:11px 13px;border:1.5px solid #D4C4B0;border-radius:9px;
+  input,textarea{width:100%;padding:11px 13px;border:1.5px solid #D4C4B0;border-radius:9px;
     font-size:15px;font-family:'Inter',sans-serif;background:#FBF8F4;color:#2E1F0F;
     transition:border-color 0.2s;outline:none;-webkit-appearance:none}
-  input:focus,textarea:focus,select:focus{border-color:#C87941;box-shadow:0 0 0 3px rgba(200,121,65,0.15)}
+  input:focus,textarea:focus{border-color:#C87941;box-shadow:0 0 0 3px rgba(200,121,65,0.15)}
   textarea{resize:vertical;min-height:80px}
   .req{color:#B94040}
   .hint{font-size:11px;color:#9A8878;margin-top:4px}
-
-  /* Photo */
   .photo-zone{border:2px dashed #C8B8A2;border-radius:12px;padding:26px 16px;
               text-align:center;background:#FAF7F3;transition:border-color 0.2s}
   .photo-zone .ico{font-size:34px;margin-bottom:8px}
@@ -36,8 +34,6 @@
   .photo-preview{width:100%;max-height:230px;object-fit:cover;border-radius:10px;
                  border:2px solid #D4C4B0;display:block;margin-bottom:12px}
   .row-btns{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
-
-  /* Buttons */
   .btn-p{background:linear-gradient(135deg,#C87941,#A85E28);color:#fff;border:none;
     border-radius:10px;padding:11px 18px;font-family:'Inter',sans-serif;font-weight:700;
     font-size:14px;cursor:pointer;display:inline-flex;align-items:center;gap:8px;
@@ -48,22 +44,17 @@
   .submit{width:100%;padding:15px;font-size:16px;margin-top:4px}
   .spinner{width:18px;height:18px;border:2.5px solid rgba(255,255,255,0.3);
            border-top-color:#fff;border-radius:50%;animation:spin 0.8s linear infinite}
-
-  /* Success */
-  .success{text-align:center;padding:30px 16px}
-  .success .big{font-size:60px;margin-bottom:14px}
-  .success h2{font-family:'Playfair Display',serif;font-size:23px;color:#2E1F0F;margin-bottom:8px}
-  .success p{color:#7A6855;font-size:14px;line-height:1.6}
-  .reg-box{background:#F0E4D4;border-radius:14px;padding:18px;margin:18px 0;
-           font-family:'Playfair Display',serif;font-size:30px;font-weight:700;
-           color:#C87941;letter-spacing:3px}
-  .reg-lbl{font-size:12px;color:#9A8878;font-family:'Inter',sans-serif;font-weight:600;margin-bottom:6px}
+  .success{text-align:center;padding:40px 16px}
+  .success .big{font-size:60px;margin-bottom:16px}
+  .success h2{font-family:'Playfair Display',serif;font-size:23px;color:#2E1F0F;margin-bottom:16px}
+  .reg-msg{background:#E8F5EE;border:1.5px solid #3A7D5A44;border-radius:12px;
+           padding:18px 20px;color:#2A6040;font-weight:600;font-size:15px;
+           line-height:1.6;text-align:center}
 </style>
 </head>
 <body>
 
 <script>
-  // ── ONLY this line was customised for you ──
   const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwDoFp1w30Z490U53u2VK_pn1raQhyPgNgu14s4vP3AzTAVCCDjbKJ9LI4MRIU5hUCsuA/exec";
   const WORKSHOP   = "Samar Instruments Registration";
 </script>
@@ -73,6 +64,7 @@
   <p>Fill in your details for registration</p>
 </div>
 
+<!-- FORM -->
 <div class="wrap" id="formWrap">
 
   <div class="card">
@@ -132,15 +124,14 @@
 
 </div>
 
-<!-- Success screen -->
+<!-- SUCCESS SCREEN — only shows day and time message -->
 <div class="wrap" id="successWrap" style="display:none">
   <div class="card">
     <div class="success">
       <div class="big">🎉</div>
       <h2>You're Registered!</h2>
-      <p id="regTimeMsg" style="background:#E8F5EE;border:1.5px solid #3A7D5A44;border-radius:10px;
-         padding:12px 16px;color:#2A6040;font-weight:600;font-size:15px;margin:12px 0"></p>
-      </div>
+      <div class="reg-msg" id="regTimeMsg"></div>
+    </div>
   </div>
 </div>
 
@@ -201,7 +192,7 @@
     const company  = document.getElementById("company").value.trim();
     const feedback = document.getElementById("feedback").value.trim();
 
-    if (!name)   { alert("Please enter your full name."); return; }
+    if (!name)                        { alert("Please enter your full name."); return; }
     if (!email || !email.includes("@")) { alert("Please enter a valid email address."); return; }
 
     const btn = document.getElementById("submitBtn");
@@ -209,60 +200,37 @@
     btn.innerHTML = '<span class="spinner"></span> Submitting…';
 
     const regNumber = makeRegNumber();
-    const now = new Date();
-    const timestamp = now.toLocaleString("en-IN", {
-      day:"2-digit", month:"short", year:"numeric",
-      hour:"2-digit", minute:"2-digit", hour12:true
-    });
+    const now       = new Date();
 
-    // Separate date and time for sheet columns
-    const dateStr = now.toLocaleDateString("en-IN", {
-      day:"2-digit", month:"short", year:"numeric"
-    });
-    const timeStr = now.toLocaleTimeString("en-IN", {
-      hour:"2-digit", minute:"2-digit", hour12:true
-    }).toUpperCase();
+    const dateStr = now.toLocaleDateString("en-IN", { day:"2-digit", month:"short", year:"numeric" });
+    const timeStr = now.toLocaleTimeString("en-IN", { hour:"2-digit", minute:"2-digit", hour12:true }).toUpperCase();
+    const timestamp = dateStr + " " + timeStr;
 
-    // Format: "Tuesday, 18 Jun 2026 at 02:45 PM"
     const dayName = now.toLocaleDateString("en-IN", { weekday:"long" });
     const dayFull = now.toLocaleDateString("en-IN", { day:"2-digit", month:"long", year:"numeric" });
     const regMsg  = `You have been registered for ${dayName}, ${dayFull} at ${timeStr}`;
 
     const payload = {
-      regNumber, name, email, mobile, company, feedback,
-      source: "",
-      date: dateStr,
-      time: timeStr,
-      photo: photoB64 || "",
-      timestamp
+      regNumber, name, email, mobile, company,
+      feedback, source: "",
+      date: dateStr, time: timeStr, timestamp,
+      photo: photoB64 || ""
     };
 
     try {
       await fetch(SCRIPT_URL, {
         method: "POST", mode: "no-cors",
-        headers: { "Content-Type":"application/json" },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload)
       });
-      document.getElementById("formWrap").style.display = "none";
+      document.getElementById("formWrap").style.display    = "none";
       document.getElementById("successWrap").style.display = "block";
-      document.getElementById("regDisplay").textContent = regNumber;
-      document.getElementById("regTimeMsg").textContent = regMsg;
-      window.scrollTo(0,0);
+      document.getElementById("regTimeMsg").textContent    = regMsg;
+      window.scrollTo(0, 0);
     } catch(err) {
       alert("Submission failed. Please check your internet and try again.");
       btn.disabled = false;
       btn.innerHTML = "✅ Complete Registration";
-    }R
-  }
-
-  function shareIt() {
-    const reg = document.getElementById("regDisplay").textContent;
-    const text = `✅ I've registered for the ${WORKSHOP}!\n\nMy Registration Number: *${reg}*\n\nSave this number — it will be needed for attendance verification at the event.`;
-    if (navigator.share) {
-      navigator.share({ title: WORKSHOP, text });
-    } else {
-      navigator.clipboard.writeText(text)
-        .then(() => alert("Copied to clipboard! Paste it into WhatsApp or email."));
     }
   }
 </script>
